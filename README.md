@@ -20,6 +20,7 @@ The component must be accessible and work in the majority of browser; Edge, Chro
 - Accessibility has been prioritized.
 - Keyboard and mouse support is available.
 - Oral presentation of the solution, including an explanation about decisions, reflections and possible limitations of the solution.
+  - The designs showcase a half-star/decimal rating, but that is truly optional! Only do it if it feels like a fun challenge. Your solution does not need to account for this type of behavior.
 
 ## Considerations and reflections
 
