@@ -23,9 +23,23 @@ export class CaseRating extends LitElement {
     span[filled] svg {
       fill: #e9a93c;
     }
+
+    div[disabled] {
+      cursor: default;
+      pointer-events: none;
+
+      svg {
+        fill: #eeeeee;
+      }
+
+      span[filled] svg {
+        fill: #b8b8b7;
+      }
+    }
   `;
 
   @property({ type: Number }) public rating = 0;
+  @property({ type: Boolean }) public disabled = false;
 
   @state() private _hoveredRating: number | null = null;
 
@@ -34,7 +48,7 @@ export class CaseRating extends LitElement {
   protected render() {
     const shownRating = this._hoveredRating ?? this.rating;
 
-    return html` <div>
+    return html` <div ?disabled=${this.disabled}>
       ${this.range.map(
         (i) =>
           html`<span
