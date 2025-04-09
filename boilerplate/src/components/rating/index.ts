@@ -1,5 +1,5 @@
-import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { html, LitElement } from "lit";
+import { customElement } from "lit/decorators.js";
 
 @customElement(`case-rating`)
 export class CaseRating extends LitElement {
@@ -10,6 +10,6 @@ export class CaseRating extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'case-rating': CaseRating;
+    "case-rating": CaseRating;
   }
 }
