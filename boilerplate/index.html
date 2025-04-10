@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <title>interview-case</title>
     <script type="module" src="/src/components/index.ts"></script>
+    <script>
+      function changed(e) {
+        console.log('Rating set', e.detail.rating);
+      }
+
+      function input(e) {
+        console.log('Rating input', e.detail.rating);
+      }
+    </script>
     <style>
       html,
       body {
@@ -13,9 +22,9 @@
   </head>
   <body>
     <!-- your component here -->
-    <case-rating></case-rating>
-    <case-rating rating="3"></case-rating>
-    <case-rating disabled ></case-rating>
-    <case-rating disabled rating="3"></case-rating>
+    <case-rating onchange="changed(event)" oninput="input(event)"></case-rating>
+    <case-rating onchange="changed(event)" oninput="input(event)" rating="3"></case-rating>
+    <case-rating onchange="changed(event)" oninput="input(event)" disabled ></case-rating>
+    <case-rating onchange="changed(event)" oninput="input(event)" disabled rating="3"></case-rating>
   </body>
 </html>

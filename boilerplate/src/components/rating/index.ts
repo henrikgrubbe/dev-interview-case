@@ -70,6 +70,7 @@ export class CaseRating extends LitElement {
 
   private setHoveredRating(rating: number): void {
     this._hoveredRating = rating;
+    this.dispatchRatingEvent("input", rating);
   }
 
   private removeHoveredRating(): void {
@@ -78,6 +79,24 @@ export class CaseRating extends LitElement {
 
   private setRating(rating: number): void {
     this.rating = rating;
+    this.dispatchRatingEvent("change", rating);
+  }
+
+  private dispatchRatingEvent(
+    type: "input" | "change",
+    rating: number,
+  ): Promise<boolean> {
+    return this.updateComplete.then(() =>
+      this.dispatchEvent(
+        new CustomEvent(type, {
+          detail: {
+            rating,
+          },
+          bubbles: true,
+          composed: true,
+        }),
+      ),
+    );
   }
 }
 
