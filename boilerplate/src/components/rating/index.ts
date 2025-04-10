@@ -1,18 +1,19 @@
 import { css, html, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import { starBold } from "./icons";
 
 @customElement(`case-rating`)
 export class CaseRating extends LitElement {
   static styles = css`
-    div {
-      display: flex;
-    }
-
-    span {
+    .star {
+      box-sizing: content-box;
       height: 24px;
       width: 24px;
       padding: 4px;
+
+      border: none;
+      background: none;
       cursor: pointer;
     }
 
@@ -20,11 +21,11 @@ export class CaseRating extends LitElement {
       fill: #d5d5d5;
     }
 
-    span[filled] svg {
+    .star.filled svg {
       fill: #e9a93c;
     }
 
-    div[disabled] {
+    .star:disabled {
       cursor: default;
       pointer-events: none;
 
@@ -32,7 +33,7 @@ export class CaseRating extends LitElement {
         fill: #eeeeee;
       }
 
-      span[filled] svg {
+      &.filled svg {
         fill: #b8b8b7;
       }
     }
@@ -48,23 +49,35 @@ export class CaseRating extends LitElement {
   protected render() {
     const shownRating = this._hoveredRating ?? this.rating;
 
-    return html` <div ?disabled=${this.disabled}>
+    return html` <div>
       ${this.range.map(
         (i) =>
-          html`<span
-            ?filled=${shownRating >= i}
-            @mouseenter=${() => (this._hoveredRating = i)}
-            @mouseleave=${() => (this._hoveredRating = null)}
+          html`<button
+            type="button"
+            class=${classMap({ star: true, filled: shownRating >= i })}
+            ?disabled=${this.disabled}
+            @focusin=${() => this.setHoveredRating(i)}
+            @mouseenter=${() => this.setHoveredRating(i)}
+            @focusout=${this.removeHoveredRating}
+            @mouseleave=${this.removeHoveredRating}
             @click=${() => this.setRating(i)}
-            >${starBold}</span
-          >`,
+          >
+            ${starBold}
+          </button>`,
       )}
     </div>`;
   }
 
-  private setRating(rating: number) {
-    this.rating = rating;
+  private setHoveredRating(rating: number): void {
+    this._hoveredRating = rating;
+  }
+
+  private removeHoveredRating(): void {
     this._hoveredRating = null;
+  }
+
+  private setRating(rating: number): void {
+    this.rating = rating;
   }
 }
 
